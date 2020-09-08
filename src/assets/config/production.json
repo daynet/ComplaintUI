@@ -1,0 +1,7 @@
+{
+    "debugging": false,
+  
+    "API_ENDPOINTS": {
+      "USER": "http://http://172.16.12.15/AptitudeTest/api/v1/"
+    }
+  }

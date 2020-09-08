@@ -1,0 +1,237 @@
+<app-header [navbarBrandRouterLink]="['/dashboard']" [fixed]="true"
+  [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 140, height: 50, alt: 'SUN Logo'}"
+  [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
+  <ul class="nav navbar-nav d-md-down-none">
+
+  </ul>
+  <ul class="nav navbar-nav ml-auto">
+
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+
+      <img src="assets/img/buidling.png" alt="Skyline" height="50" width="45">
+      <!-- [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 89, height: 25, alt: 'SUN Logo'}" -->
+
+
+    </li>
+  </ul>
+
+</app-header>
+<br />
+<br />
+<br />
+
+<div class="container" *ngIf="showComplaintList">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i> Complaint List
+      <button (click)="showComplaintList=false; showComplaintInput=true; conplaintDetail=''" type="reset"
+        class="btn btn-sm btn-dark pull-right"><i class="angle-double-right"></i> New Complaints</button>
+        <!-- <a class="btn pull-right" [routerLink]="['/dashboard']"><i class="icon-graph"></i> &nbsp;Dashboard</a> -->
+         <a class="btn pull-right" href="http://lms.sun.edu.ng"> <<<<Back To LMS portal</a>
+
+    </div>
+    <div class="card-body" style='overflow-x:scroll;overflow-y:hidden;'>
+      <table class="table table-bordered" id="table1">
+        <thead>
+          <tr>
+            <th>S/N</th>
+            <th>Department Name</th>
+            <th>Complaint Type</th>
+            <!-- <th>Complaint</th> -->
+            <!-- <th>Complaint Title</th> -->
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Rating</th>
+            <th>Comment</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let complaint of complaints let a=index">
+          <tr>
+            <td>{{a + 1}}</td>
+            <td>{{complaint?.departmentName}}</td>
+            <td>{{complaint?.complaintType}}</td>
+            <!-- <td><span [innerHTML]="complaint?.complaintDetail">
+            </span></td> -->
+            <!-- <td>{{complaint?.title}}</td> -->
+            <td>{{complaint?.priority}}</td>
+            <td>{{complaint?.status}}</td>
+            <td>{{complaint?.rating}}</td>
+              <td><span [innerHTML]="complaint?.ComplaintResponse">
+            </span></td>
+            <td>
+                <button type="button" (click)="viewDetail(complaint)" class="btn btn-outline-danger btn-lg btn-block">View</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="card-footer">
+
+      <!-- <div class="pull-right">
+        <button type="submit" [disabled]="(ComplaintForm.invalid)" (click)="onSubmitConplaint(ComplaintForm)"
+          class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i>
+          Submit</button>
+        <button (click)="displaySignup = true; displayOtp = false; displayResendOtp = false;" type="reset"
+          class="btn btn-sm btn-dark"><i class="angle-double-right"></i> Cancel</button>
+
+      </div> -->
+
+    </div>
+  </div>
+</div>
+
+<div class="app-body" *ngIf="showComplaintInput">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card mx-4">
+            <div class="card-header">
+              <i class="fa fa-align-justify"></i> Complaint Input
+
+            </div>
+            <div class="card-body p-4">
+              <form novalidate [formGroup]="ComplaintForm">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-user"></i></span>
+                  </div>
+                  <select id="departmentId" [ngClass]="{'is-invalid':f.departmentId.errors}" name="departmentId"
+                    formControlName="departmentId" class="form-control"
+                    (change)="getComplaintType($event.target.value)">
+                    <option value="0">Select Department</option>
+                    <option *ngFor="let x of departmentList" [value]="x.departmentId">{{ x.departmentName }}</option>
+                  </select>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-user"></i></span>
+                  </div>
+                  <select id="complaintTypeId" [ngClass]="{'is-invalid':f.complaintTypeId.errors}"
+                    name="complaintTypeId" formControlName="complaintTypeId" class="form-control">
+                    <option value="0">Select Complaint Type</option>
+                    <option *ngFor="let x of complaintTypeList" [value]="x.complaintTypeId">{{ x.complaintName }}
+                    </option>
+                  </select>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-user"></i></span>
+                  </div>
+                  <select id="priorityId" [ngClass]="{'is-invalid':f.priorityId.errors}" name="priorityId"
+                    formControlName="priorityId" class="form-control">
+                    <option value="0">Please Priority</option>
+                    <option value="1">Low</option>
+                    <option value="2">High</option>
+                    <option value="3">Critical</option>
+                  </select>
+                </div>
+               <!--  <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="icon-user"></i></span>
+                  </div>
+                  <input class="form-control" name = "title" id = "title" formControlName="title" placeholder="Complaint Title" [ngClass]="{'is-invalid':f.title.errors}"/>
+                </div> -->
+              </form>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="icon-user"></i></span>
+                </div>
+               <!--  <ckeditor [config]="editorConfig" [editor]="Editor" required [(ngModel)]="conplaintDetail" data=""
+                  name="text"></ckeditor> -->
+                  <!-- <ckeditor [editor]="Editor"  required [(ngModel)]="conplaintDetail" data="" 
+                  name="text"></ckeditor> -->
+                  <textarea type="text" id="form7" class="lg-textarea lg-textarea-auto form-control" mdbInput [(ngModel)] = "conplaintDetail" placeholder="Type comment here"></textarea>
+              </div>
+              
+            </div>
+            <div class="card-footer">
+
+              <div class="pull-right">
+                <button type="submit" [disabled]="ComplaintForm.invalid && conplaintDetail ==''"
+                  (click)="onSubmitConplaint(ComplaintForm)" class="btn btn-sm btn-primary"><i
+                    class="fa fa-dot-circle-o"></i>
+                  Submit</button>
+                <button (click)="showComplaintList=true; showComplaintInput=false;" type="reset"
+                  class="btn btn-sm btn-dark"><i class="angle-double-right"></i> Cancel</button>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+
+<div class="app-body" *ngIf="showComplaintDetail">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                  <i class="fa fa-align-justify"></i> Detail of complaint
+                </div>
+                <div class="card-body">
+                  <table class="table">
+
+                    <tbody>
+                        <span><h5 style="text-align:center;">Department</h5></span>
+                      <tr>
+                        <td style="text-align:center;">{{department}}</td>
+                      </tr>
+                      <span><h5 style="text-align:center;">Complaint Type</h5></span>
+                      <tr style="text-align:center;">
+                        <td>{{complaintType}}</td>
+                      </tr>
+                      <span><h5 style="text-align:center;">Priority</h5></span>
+                       <tr>
+                        <td style="text-align:center;">{{priority}}</td>
+                      </tr>
+                      <span><h5 style="text-align:center;">Status</h5></span>
+                      <tr>
+                        <td style="text-align:center;">{{status}}</td>
+                      </tr>
+                      <span><h5 style="text-align:center;">Complaint Detail</h5></span>
+                      <tr>
+                        <td style="text-align:center;"><span [innerHTML]="detail"></span></td>
+                      </tr>
+                      <span><h5 style="text-align:center;">Response</h5></span>
+                      <tr>
+                        <td style="text-align:center;"><span [innerHTML]="responseComment"></span></td>
+                      </tr>
+                      <tr>
+                          <td > <select id="priorityId" [(ngModel)]="ratingDropdown" name="priorityId"
+                            class="form-control">
+                            <option value="0">Rating your complaint response</option>
+                            <option value="1">Excellent</option>
+                            <option value="2">Very Good</option>
+                            <option value="3">Good</option>
+                            <option value="4">Fair</option>
+                            <option value="5">Bad</option>
+                          </select></td>
+                        </tr>
+                    </tbody>
+                  </table>
+                  <div class="pull-right">
+                      <button type="submit" [disabled]="ratingDropdown ==''"
+                        (click)="onSaveRating()" class="btn btn-sm btn-primary"><i
+                          class="fa fa-dot-circle-o"></i>
+                        Submit</button>
+                      <button (click)=" showComplaintDetail = false; showComplaintList =true;" type="reset"
+                        class="btn btn-sm btn-dark"><i class="angle-double-right"></i> Cancel</button>
+      
+                    </div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

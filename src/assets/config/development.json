@@ -1,0 +1,7 @@
+{
+    "debugging": true,
+  
+    "API_ENDPOINTS": {
+      "USER": "http://localhost:50038/api/v1/"
+    }
+  }

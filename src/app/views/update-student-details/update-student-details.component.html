@@ -1,0 +1,201 @@
+<app-header
+  [navbarBrandRouterLink]="['/dashboard']"
+  [fixed]="true"
+  [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 140, height: 50, alt: 'SUN Logo'}"
+
+  [sidebarToggler]="'lg'"
+  [asideMenuToggler]="'lg'">
+  <ul class="nav navbar-nav d-md-down-none">
+    
+  </ul>
+  <ul class="nav navbar-nav ml-auto">
+   
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+     
+      <a class="nav nav-pills nav-justified" [routerLink]="['/home']"><i class="icon-graph"></i> &nbsp; Back to Home>>></a>
+          <!-- [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 89, height: 25, alt: 'SUN Logo'}" -->
+          
+     
+    </li>
+  </ul>
+  
+</app-header>
+<br/>
+<br/>
+<br/>
+<div class="container">
+<div class="animated fadeIn">
+        <div class="row"></div>
+        <form novalidate [formGroup]="updateForm">
+          <div class="col-sm-12">
+            <div class="card">
+               
+              <div class="card-header">
+               
+                <h3 class="text-center"> STUDENT UPDATE FORM</h3>
+               
+              </div>
+              <div class="card-header">
+               
+             
+                  <strong>Update your Details</strong>
+                  <small>!!!</small>
+                </div>
+                <div class="row">
+                    <div class=" col-sm-6">
+                      <strong>PESONAL DETAILS*</strong>
+                     
+  
+                    </div>
+                   
+                  </div><!--/.row-->
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-sm-4">
+                        
+                      </div>
+                      <div class=" col-sm-4">
+                        
+                      </div>
+                     
+                  </div>
+                    <div class="row">
+                            <div class="col-sm-4">
+                              <label for="First Name">First Name*</label>
+                              <input [readonly]="isReadOnly" [(ngModel)]="firstName" [ngClass]="{'is-invalid':f.firstName.errors}" formControlName="firstName" class="form-control" placeholder="First Name" autocomplete="First Name">
+                            </div>
+                            <div class=" col-sm-4">
+                              <label for="postal-code">Middle Name*</label>
+                              <input  [readonly]="isReadOnly" [(ngModel)]="middleName" formControlName="middleName" class="form-control" placeholder="Middle Name" autocomplete="Middle Name" required>
+                            </div>
+                            <div class=" col-sm-4">
+                                    <label for="postal-code">Last Name*</label>
+                                    <input  [readonly]="isReadOnly" [(ngModel)]="lastName" [ngClass]="{'is-invalid':f.lastName.errors}" formControlName="lastName" class="form-control" placeholder="Last Name" autocomplete="Last Name" required>
+                                  </div>
+                          </div><!--/.row-->
+                          <div class="row">
+                                <div class=" col-sm-6">
+                                  <label for="city">Mobile Number*</label>
+                                  <input type="text" [(ngModel)]="Mobile" [ngClass]="{'is-invalid':f.mobileNumber.errors}" maxlength="14" appOnlyNumbers  formControlName="mobileNumber" class="form-control" placeholder="Mobile Number" autocomplete="Mobile Number" required>
+                                </div>
+                                <div class=" col-sm-6">
+                                  <label for="postal-code">Email*</label>
+                                  <input  [(ngModel)]="Email" [ngClass]="{'is-invalid':f.email.errors}" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" formControlName="email" class="form-control" placeholder="Email" autocomplete="Email" required>
+
+                                </div>
+                               
+                              </div><!--/.row-->
+                              <div class="row">
+                                <div class=" col-sm-6">
+                                  <label for="suo">Drivers License</label>
+                                  <input type="text"  formControlName="license" (keypress)="omit_special_char($event)" class="form-control" placeholder="license" maxlength="20" autocomplete="license" required>
+    
+                                </div>
+                                <div class=" col-sm-6">
+                                  <label for="suo">Passport Number</label>
+                                  <input type="text" formControlName="passport"  (keypress)="omit_special_char($event)" class="form-control" placeholder="Passport Number" maxlength="10" autocomplete="passport" required>
+    
+                                </div>
+                                
+                              </div>
+
+                              <div class="row">
+                                <div class=" col-sm-6">
+                                  <strong>PARENT/GUARDIAN DETAILS*</strong>
+                                 
+              
+                                </div>
+                               
+                              </div><!--/.row-->
+                <div class="row">
+                  <div class=" col-sm-6">
+                    <label for="Name">Parent/Guardian Name*</label>
+                    <input  [readonly]="isReadOnly" [(ngModel)]="guardianName" [ngClass]="{'is-invalid':f.Gname.errors}" formControlName="Gname" class="form-control" placeholder="Parent/Guardian Name" autocomplete="Gname" required>
+                  </div>
+                  <div class=" col-sm-6">
+                    <label for="postal-code">Email*</label>
+                    <input  [(ngModel)]="GEmail" [ngClass]="{'is-invalid':f.Gemail.errors}" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" formControlName="Gemail" class="form-control" placeholder="Email" autocomplete="Email" required>
+                </div>
+               
+                  <!-- <div class=" col-sm-6">
+                    <label for="program">Program Interested In* </label>
+                    <select  [ngClass]="{'is-invalid':f.program.errors}" formControlName="program" class="form-control" required>
+                        <option value = " " >---Select Course---</option>
+                        <option *ngFor = "let c of courseList.result" value="{{c.courseId}}">{{c.courseName}}</option>
+                        </select>
+
+                  </div> -->
+                </div><!--/.row-->
+                <div class="row">
+                    <div class=" col-sm-6">
+                        <label for="city">Mobile Number*</label>
+                        <input [(ngModel)]="Gmobile" type="text" [ngClass]="{'is-invalid':f.GmobileNumber.errors}" maxlength="15" appOnlyNumbers formControlName="GmobileNumber" class="form-control" placeholder="Mobile Number" autocomplete="Mobile Number" required>
+                      </div>
+                        
+                      </div><!--/.row-->
+                      
+                         <!--/.row-->
+                       
+
+              </div>
+              <div class="card-footer">
+                            
+                <!-- <button  type="reset"  class="btn btn-sm btn-dark"><i class="angle-double-left"></i> Reset</button> -->
+                &nbsp; &nbsp; &nbsp; &nbsp;
+                <!-- <button  type="reset" (click)="displaySignup = false;" class="btn btn-sm btn-dark"><i class="angle-double-right"></i> Already Registered Enter OTP</button> -->
+                    <!-- <div class="pull-right"><button type="submit"  [disabled]="(updateForm.invalid)" (click)="onSubmit(updateForm)" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> -->
+                      <div class="pull-right"><button type="submit" [disabled]="(updateForm.invalid)"   (click)="onSubmit(updateForm)" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i>
+                       Update Details</button>
+                </div>
+                
+            </div> 
+            </div>
+          </div><!--/.col-->
+        </form>
+  
+        
+        
+      </div>
+</div>
+
+<!-- <div class="app-body"   >
+  <main class="main d-flex align-items-center">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-8 mx-auto">
+                  <div>
+       
+                              <div>
+                                     
+                                      <H1 class="text-center"> THANK YOU!!!</H1>
+                                      <br />
+                                      <h2 class="text-center">Your</h2>
+                                      <br/>
+                                      <h2 class="text-center"> The Marketing Department will get back to you </h2>
+                             </div>
+                        
+                      
+                  
+                  </div>
+              </div>
+          </div>
+      </div>
+  </main>
+</div>
+       -->
+
+
+
+
+
+
+
+
+
+
+  
+ 
+
+  
+
+

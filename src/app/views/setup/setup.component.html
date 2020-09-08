@@ -1,0 +1,144 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <app-header
+    [navbarBrandRouterLink]="['/dashboard']"
+    [fixed]="false"
+    [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 140, height: 50, alt: 'SUN Logo'}"
+    
+    [sidebarToggler]="'lg'"
+    [asideMenuToggler]="'lg'">
+    
+    <ul class="nav navbar-nav ml-auto"> 
+     
+      <li class="nav-item dropdown" dropdown placement="bottom right">
+          <a class="btn" [routerLink]="['/dashboard']"><i class="icon-graph"></i> &nbsp;Dashboard</a> 
+            <!-- <img src="assets/img/buidling.png" alt="Skyline" height="50" width="45"> -->
+            <!-- [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 89, height: 25, alt: 'SUN Logo'}" -->
+            
+       
+      </li>
+    </ul>
+    
+  </app-header>
+<br />
+<br />
+<br />
+
+<div class="container" *ngIf="displayType">
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i> Setup
+     
+
+    </div>
+     <!-- <div class="card-body" style='overflow-x:scroll;overflow-y:hidden;'>  -->
+        
+       
+                      <div class="card-body p-4">
+                        <form novalidate [formGroup]="setupForm">
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="icon-user"></i></span>
+                            </div>
+                          
+                            <select id="departmentId" [ngClass]="{'is-invalid':f.departmentId.errors}" name="departmentId" 
+                            formControlName="departmentId" class="form-control">
+                            <option value="0">-----Select Department----</option>
+                            <option *ngFor="let x of departmentList" [value]="x.departmentId">{{ x.departmentName }}</option>
+                          </select>
+                          </div>
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="icon-user"></i></span>
+                            </div>
+                          <div class="col-sm-4">
+                              <label for="Complaint Type">Complain Name*</label>
+                              <input formControlName="complaintName" [ngClass]="{'is-invalid':f.complaintName.errors}" class="form-control" placeholder=" Type complaint name here" autocomplete="complaintName" required>
+                            </div>
+
+                          </div>
+                       
+                        
+                        </form>
+                      
+                      </div>
+                      <div class="card-footer">
+          
+                        <div class="pull-right">
+                          <button type="submit" [disabled]="(setupForm.invalid)" (click)="onSave(setupForm)" 
+                            class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i>
+                            Save</button>
+                          <button (click)="displayComplainType=true; displayType=false;" type="reset"
+                            class="btn btn-sm btn-dark"><i class="angle-double-right"></i> Cancel</button>
+          
+                        </div>
+                 
+                      </div>
+          
+
+  
+  </div>
+</div>
+
+
+<div class="app-body" *ngIf="displayComplainType">
+  <main class="main d-flex align-items-center">
+  
+     
+        <div class="col-lg-12">
+          <div class="card">
+              <div class="card-header">
+                  <i class="fa fa-align-justify"></i> Complaint Type Details
+                  <span class="pull-right">
+                      <button type="button" class="btn btn-primary"
+                          (click)="displayType=true; displayComplainType=false;">
+                          Add New Complaint
+                      </button>
+                  </span>
+                
+              </div>
+            <div class="card-body">
+              <div style="width: 1000px; height: 1000px; overflow-y: scroll;">
+                <table class="table table-bordered"  >
+                    <thead>
+                        <tr><th>S/N</th>
+                            <th> Department Name</th>
+                            <th>Complaint Name</th>
+                            
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let com of complainTypeList let i = index">
+                        <tr>
+                                <td>{{i + 1}}</td>
+                                <td>{{com.departmentName}}</td>
+                                <td>{{com.complaintName}}</td>
+                                <td><button type="button" class="btn btn-danger"
+                                  (click)="deleteComplaint(com.complaintTypeId)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                  Delete
+                              </button> </td>
+                              <td><button type="button" class="btn btn-warning"
+                            
+                                (click)="updateComplaint(com.complaintTypeId)"> <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                Edit
+                            </button> </td>
+                            <td>
+                              <!-- <button (click)="DeleteQuestion(question)" type="button" class="btn btn-pill btn-block btn-link">Delete</button> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            
+            
+          </div>
+        </div>
+  
+
+  </main>
+</div>
+
+
